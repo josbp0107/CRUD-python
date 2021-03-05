@@ -1,11 +1,16 @@
 
-clients = 'Jose, Carlos'
+clients = 'Luis, Jose, Carlos'
+
+
+def _get_name_client():
+    return input('What is the client name? ').capitalize()
 
 
 def add_clients(client_name):
     global clients
     if client_name not in clients:
         clients += f', {client_name}'
+        list_clients()
     else:
         print('The name is already')
 
@@ -22,8 +27,14 @@ def update_client():
         return print(f'{client_name} is not in client list')
 
 
-def delete_client():
-    pass
+def delete_client(client_name):
+    global clients
+
+    if client_name in clients:
+        clients = clients.replace(client_name + ',', '')
+        list_clients()
+    else:
+        print('Client is not in Clients list')
 
 
 def list_clients():
@@ -42,11 +53,14 @@ def menu():
     option = option.upper()
 
     if option == 'C':
-        client_name = input('Add name client: ')
+        client_name = _get_name_client()
         add_clients(client_name)
     elif option == 'U':
         update_client()
         list_clients()
+    elif option == 'D':
+        client_name = _get_name_client()
+        delete_client(client_name)
 
 
 if __name__ == '__main__':
