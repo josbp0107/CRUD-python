@@ -1,9 +1,23 @@
+import sys
 
 clients = 'Luis, Jose, Carlos'
 
 
 def _get_name_client():
-    return input('What is the client name? ').capitalize()
+    client_name = None
+
+    while not client_name:
+
+        client_name = input('What is the client name? ').capitalize()
+        # Rompe el ciclo cuando se ingresa la palabra exit por consola
+        if client_name == 'Exit':
+            client_name = None
+            break
+    # Si se agrego la palabra exit termina el programa.
+    if not client_name:
+        sys.exit()
+
+    return client_name
 
 
 def add_clients(client_name):
@@ -57,6 +71,7 @@ def menu():
     print('WELCOME TO THE CUSTOMER CRUD')
     print('*' * 50)
     print("[C]reate a new cliente")
+    print("[R]ead list clients")
     print("[U]pdate client name")
     print("[D]elete a client")
     print("[S]earch a client")
@@ -67,6 +82,8 @@ def menu():
     if option == 'C':
         client_name = _get_name_client()
         add_clients(client_name)
+    elif option == 'R':
+        list_clients()
     elif option == 'U':
         update_client()
         list_clients()
