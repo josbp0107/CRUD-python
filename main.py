@@ -37,6 +37,17 @@ def delete_client(client_name):
         print('Client is not in Clients list')
 
 
+def search_client(client_name):
+    #global clients
+    client_list = clients.split(', ')  # Nos permite generar un separador
+
+    for client in client_list:
+        if client != client_name:
+            continue
+        else:
+            return True
+
+
 def list_clients():
     global clients
     print(clients)
@@ -48,6 +59,7 @@ def menu():
     print("[C]reate a new cliente")
     print("[U]pdate client name")
     print("[D]elete a client")
+    print("[S]earch a client")
 
     option = input(str('Choose an option: '))
     option = option.upper()
@@ -61,6 +73,14 @@ def menu():
     elif option == 'D':
         client_name = _get_name_client()
         delete_client(client_name)
+    elif option == 'S':
+        client_name = _get_name_client()
+        found = search_client(client_name)
+
+        if found:
+            print(f'The client {client_name} is in client list')
+        else:
+            print(f"{client_name} is not in client list")
 
 
 if __name__ == '__main__':
