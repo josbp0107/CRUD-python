@@ -1,6 +1,6 @@
 import sys
 
-clients = 'Luis, Jose, Carlos'
+clients = ['Luis', 'Jose', 'Carlos']
 
 
 def _get_name_client():
@@ -23,7 +23,7 @@ def _get_name_client():
 def add_clients(client_name):
     global clients
     if client_name not in clients:
-        clients += f', {client_name}'
+        clients.append(client_name)
         list_clients()
     else:
         print('The name is already')
@@ -36,7 +36,8 @@ def update_client():
     update_name = input(f"New name of {client_name} is: ").capitalize()
 
     if client_name in clients:
-        clients = clients.replace(client_name, update_name)
+        index = clients.index(client_name)
+        clients[index] = update_name
     else:
         return print(f'{client_name} is not in client list')
 
@@ -45,7 +46,7 @@ def delete_client(client_name):
     global clients
 
     if client_name in clients:
-        clients = clients.replace(client_name + ',', '')
+        clients.remove(client_name)
         list_clients()
     else:
         print('Client is not in Clients list')
@@ -53,9 +54,8 @@ def delete_client(client_name):
 
 def search_client(client_name):
     #global clients
-    client_list = clients.split(', ')  # Nos permite generar un separador
 
-    for client in client_list:
+    for client in clients:
         if client != client_name:
             continue
         else:
@@ -63,8 +63,8 @@ def search_client(client_name):
 
 
 def list_clients():
-    global clients
-    print(clients)
+    for idx, client in enumerate(clients):
+        print(f'{idx} : {client}')
 
 
 def menu():
@@ -102,4 +102,3 @@ def menu():
 
 if __name__ == '__main__':
     menu()
-    list_clients()
