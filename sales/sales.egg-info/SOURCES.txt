@@ -1,0 +1,8 @@
+sales.py
+setup.py
+sales.egg-info/PKG-INFO
+sales.egg-info/SOURCES.txt
+sales.egg-info/dependency_links.txt
+sales.egg-info/entry_points.txt
+sales.egg-info/requires.txt
+sales.egg-info/top_level.txt
