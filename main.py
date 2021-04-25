@@ -1,6 +1,27 @@
 import sys
+import csv
+import os
 
-clients = ['Luis', 'Jose', 'Carlos']
+CLIENT_TABLE = '.clients.csv'
+CLIENT_SCHEMA = ['name', 'company', 'email', 'position']
+clients = []
+
+def _initialize_clients_from_storage():
+    with open(CLIENT_TABLE, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f, fieldnames=CLIENT_SCHEMA)
+
+        for row in reader:
+            clients.append(row)
+
+
+def _save_client_to_storage():
+    tmp_table_name = f'{CLIENT_TABLE}.tmp'
+    with open(tmp_table_name, 'w', encoding='utf-8') as f:
+        write = csv.DictWriter(f, fieldnames=CLIENT_SCHEMA)
+        write.writerows(clients)
+
+        os.remove(CLIENT_TABLE)
+        os.rename(tmp_table_name, CLIENT_TABLE)
 
 
 def _get_name_client():
@@ -68,6 +89,8 @@ def list_clients():
 
 
 def menu():
+    _initialize_clients_from_storage()
+
     print('WELCOME TO THE CUSTOMER CRUD')
     print('*' * 50)
     print("[C]reate a new cliente")
@@ -98,7 +121,8 @@ def menu():
             print(f'The client {client_name} is in client list')
         else:
             print(f"{client_name} is not in client list")
-
-
+    
+    _save_client_to_storage()  
+        
 if __name__ == '__main__':
     menu()
