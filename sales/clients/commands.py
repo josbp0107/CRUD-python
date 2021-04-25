@@ -42,7 +42,30 @@ def list(ctx):
 @click.pass_context
 def update(ctx, client_uid):
     """Update a client"""
+    client_service = ClientService(ctx.obj['clients_table'])
 
+    client_list = client_service.list_clients()
+    
+    client = [client for client in client_list if client['uid']== client_uid]
+    if client:
+        clinet =_update_client_flow(Client(**client[0]))
+        client_service.update_client(client)
+        click.echo('Client updated')
+    else:
+        click.echo('Client not found')
+
+
+def _update_client_flow(client):
+    click.echo('Leave empty if you dont want to modify the value')
+
+    client.name = click.prompt('New name', type=str, defaul=client.name)
+    client.name = click.prompt('New Company', type=str, defaul=client.compány)
+    client.name = click.prompt('New email', type=str, defaul=client.email)
+    client.name = click.prompt('New position', type=str, defaul=client.position)
+
+    return client
+
+    
 @clients.command()
 @click.pass_context
 def delete(ctx, client_uid):
